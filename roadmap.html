@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Marketing Career Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0c;
+    --paper: #faf8f4;
+    --cream: #f2ede4;
+    --gold: #c9a84c;
+    --gold-light: #e8d5a0;
+    --gold-pale: #f7f0dc;
+    --teal: #1a6b6b;
+    --teal-light: #e8f4f4;
+    --coral: #c95a3a;
+    --coral-light: #faeee9;
+    --muted: #7a7468;
+    --border: #e0d9ce;
+    --shadow: 0 2px 20px rgba(15,14,12,0.08);
+    --shadow-lg: 0 8px 40px rgba(15,14,12,0.14);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 56px 40px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 50%;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: 20%;
+    width: 200px; height: 200px;
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 50%;
+  }
+  .header-inner { max-width: 860px; margin: 0 auto; position: relative; z-index: 1; }
+  .header-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .header-tag::before { content: ''; width: 32px; height: 1px; background: var(--gold); display: block; }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+  }
+  h1 span { color: var(--gold); }
+  .header-sub {
+    font-size: 16px;
+    color: rgba(250,248,244,0.65);
+    max-width: 520px;
+    line-height: 1.7;
+  }
+
+  /* ── DATA BADGES ── */
+  .data-strip {
+    background: var(--cream);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    overflow-x: auto;
+  }
+  .data-strip-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+  }
+  .stat-badge {
+    padding: 18px 28px 16px;
+    border-right: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .stat-badge:first-child { padding-left: 0; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--teal);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.4;
+    margin-top: 4px;
+    max-width: 130px;
+  }
+  .stat-source {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+    display: block;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .main { max-width: 860px; margin: 0 auto; padding: 48px 40px 80px; }
+
+  /* ── INPUT SECTION ── */
+  .input-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 40px;
+    margin-bottom: 32px;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+  .input-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: var(--gold);
+    border-radius: 2px 0 0 2px;
+  }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .section-desc {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-group.full { grid-column: 1 / -1; }
+  label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  input, select, textarea {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: 2px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
+  }
+  textarea { resize: vertical; min-height: 100px; }
+  select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a7468' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; }
+
+  .interest-chips {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px;
+  }
+  .chip {
+    padding: 7px 16px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--paper);
+    color: var(--muted);
+    user-select: none;
+  }
+  .chip:hover { border-color: var(--gold); color: var(--ink); }
+  .chip.active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
+
+  .generate-btn {
+    width: 100%;
+    padding: 18px 32px;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    border-radius: 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    margin-top: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .generate-btn:hover { background: var(--teal); }
+  .generate-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+  .generate-btn .btn-arrow { transition: transform 0.2s; }
+  .generate-btn:hover .btn-arrow { transform: translateX(4px); }
+
+  /* ── LOADING ── */
+  .loading-state {
+    display: none;
+    text-align: center;
+    padding: 60px 40px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    margin-bottom: 32px;
+  }
+  .loading-state.visible { display: block; }
+  .loading-spinner {
+    width: 48px; height: 48px;
+    border: 2px solid var(--border);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 20px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-step {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+  .loading-steps-list {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .loading-step-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; color: var(--muted);
+    opacity: 0.4; transition: opacity 0.4s;
+  }
+  .loading-step-item.active { opacity: 1; color: var(--ink); }
+  .loading-step-item.done { opacity: 0.7; }
+  .step-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--border); flex-shrink: 0;
+    transition: background 0.3s;
+  }
+  .loading-step-item.active .step-dot { background: var(--gold); }
+  .loading-step-item.done .step-dot { background: var(--teal); }
+
+  /* ── RESULTS ── */
+  .results { display: none; }
+  .results.visible { display: block; }
+
+  .results-header {
+    display: flex; align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .results-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+  }
+  .results-meta {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .reset-btn {
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--muted);
+    transition: all 0.15s;
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+  .reset-btn:hover { border-color: var(--ink); color: var(--ink); }
+
+  /* ── ROADMAP CARDS ── */
+  .roadmap-section {
+    margin-bottom: 28px;
+    animation: fadeUp 0.5s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .roadmap-section:nth-child(2) { animation-delay: 0.08s; }
+  .roadmap-section:nth-child(3) { animation-delay: 0.16s; }
+  .roadmap-section:nth-child(4) { animation-delay: 0.24s; }
+  .roadmap-section:nth-child(5) { animation-delay: 0.32s; }
+  .roadmap-section:nth-child(6) { animation-delay: 0.40s; }
+
+  .roadmap-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .card-header {
+    padding: 20px 28px;
+    display: flex; align-items: center; gap: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .card-icon {
+    width: 40px; height: 40px;
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .icon-gold { background: var(--gold-pale); }
+  .icon-teal { background: var(--teal-light); }
+  .icon-coral { background: var(--coral-light); }
+  .card-header-text { flex: 1; }
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+  }
+  .card-subtitle { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .card-body { padding: 24px 28px; }
+
+  /* skills grid */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+  }
+  .skill-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 12px 14px;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+  .skill-priority {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .p-high { background: var(--coral); color: white; }
+  .p-med { background: var(--gold); color: var(--ink); }
+  .p-low { background: var(--teal-light); color: var(--teal); }
+  .skill-name { font-size: 13px; font-weight: 500; line-height: 1.4; }
+  .skill-why { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+
+  /* tool stack */
+  .tool-row {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .tool-row:last-child { border-bottom: none; }
+  .tool-name { font-weight: 600; font-size: 14px; min-width: 140px; }
+  .tool-tags { display: flex; flex-wrap: wrap; gap: 6px; flex: 1; }
+  .tool-tag {
+    font-size: 11px; padding: 3px 10px;
+    border-radius: 100px;
+    font-family: 'DM Mono', monospace;
+  }
+  .tag-free { background: var(--teal-light); color: var(--teal); }
+  .tag-paid { background: var(--coral-light); color: var(--coral); }
+  .tag-core { background: var(--gold-pale); color: #8a6a1a; }
+  .tool-use { font-size: 12px; color: var(--muted); }
+
+  /* timeline */
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+  .timeline-item {
+    display: flex; gap: 20px;
+    padding-bottom: 28px;
+    position: relative;
+  }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-left { display: flex; flex-direction: column; align-items: center; width: 40px; flex-shrink: 0; }
+  .timeline-dot {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--gold-pale);
+    border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 13px; font-weight: 700;
+    color: var(--gold);
+    flex-shrink: 0; z-index: 1;
+  }
+  .timeline-line {
+    width: 1px; flex: 1;
+    background: var(--border);
+    margin-top: 4px;
+  }
+  .timeline-item:last-child .timeline-line { display: none; }
+  .timeline-content { flex: 1; padding-top: 6px; }
+  .timeline-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .timeline-title { font-weight: 600; font-size: 15px; margin-bottom: 6px; }
+  .timeline-items {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;
+  }
+  .timeline-pill {
+    font-size: 12px; padding: 4px 12px;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 100px; color: var(--ink);
+  }
+
+  /* wef insight */
+  .wef-box {
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 2px;
+    padding: 24px 28px;
+    margin-top: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .wef-box::before {
+    content: '"';
+    position: absolute;
+    top: -10px; left: 20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 120px; line-height: 1;
+    color: rgba(201,168,76,0.15);
+  }
+  .wef-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .wef-label::before { content: ''; width: 20px; height: 1px; background: var(--gold); }
+  .wef-quote {
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(250,248,244,0.85);
+    position: relative; z-index: 1;
+  }
+  .wef-quote strong { color: var(--gold); font-weight: 600; }
+
+  /* linkedin section */
+  .linkedin-card {
+    background: linear-gradient(135deg, #0077b5 0%, #005983 100%);
+    border-radius: 2px;
+    padding: 28px;
+    color: white;
+    margin-top: 24px;
+  }
+  .linkedin-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .linkedin-desc { font-size: 13px; opacity: 0.85; margin-bottom: 16px; }
+  .linkedin-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .linkedin-tag {
+    font-size: 12px; padding: 5px 14px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 100px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(4px);
+  }
+
+  /* source footer */
+  .sources-footer {
+    margin-top: 32px;
+    padding: 20px 24px;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+  .sources-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .sources-list {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .source-pill {
+    font-size: 11px;
+    padding: 4px 12px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    color: var(--muted);
+  }
+  .source-pill span { color: var(--teal); font-weight: 500; }
+
+  /* error */
+  .error-box {
+    display: none;
+    padding: 20px 24px;
+    background: var(--coral-light);
+    border: 1px solid #e8c4ba;
+    border-radius: 2px;
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--coral);
+  }
+  .error-box.visible { display: block; }
+
+  @media (max-width: 600px) {
+    .header { padding: 40px 24px 36px; }
+    .main { padding: 32px 24px 60px; }
+    .data-strip { padding: 0 24px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .input-card, .card-body { padding: 28px 20px; }
+    .card-header { padding: 16px 20px; }
+    .skills-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-tag">AI Career Intelligence Tool · Boston University MS Global Marketing</div>
+    <h1>Your AI Marketing<br><span>Career Roadmap</span></h1>
+    <p class="header-sub">Enter your background and interests. Get a personalized skill path, tool stack, and 12-month action plan — grounded in live job market data and the WEF Future of Jobs Report 2025.</p>
+  </div>
+</div>
+
+<!-- DATA STRIP -->
+<div class="data-strip">
+  <div class="data-strip-inner">
+    <div class="stat-badge">
+      <span class="stat-num">170M</span>
+      <div class="stat-label">new jobs created by 2030</div>
+      <span class="stat-source">WEF 2025</span>
+    </div>
+    <div class="stat-badge">
+      <span class="stat-num">+7%</span>
+      <div class="stat-label">net employment increase globally</div>
+      <span class="stat-source">WEF 2025</span>
+    </div>
+    <div class="stat-badge">
+      <span class="stat-num">86%</span>
+      <div class="stat-label">of employers say AI will transform their business</div>
+      <span class="stat-source">WEF 2025</span>
+    </div>
+    <div class="stat-badge">
+      <span class="stat-num">$76K</span>
+      <div class="stat-label">median salary, marketing research analyst</div>
+      <span class="stat-source">BLS 2024</span>
+    </div>
+    <div class="stat-badge">
+      <span class="stat-num">+7%</span>
+      <div class="stat-label">job growth for market research analysts 2024–2034</div>
+      <span class="stat-source">BLS OOH</span>
+    </div>
+    <div class="stat-badge">
+      <span class="stat-num">85%</span>
+      <div class="stat-label">of employers plan to upskill workforces</div>
+      <span class="stat-source">WEF 2025</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- INPUT CARD -->
+  <div class="input-card" id="inputCard">
+    <div class="section-label">Step 1 — Tell Us About You</div>
+    <div class="section-title">Build Your Personalized Roadmap</div>
+    <p class="section-desc">This tool cross-references your profile with current job postings, WEF 2025 skills data, and BLS projections to generate a roadmap tailored to where you are and where you want to go.</p>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" id="userName" placeholder="e.g. Yuki Tanaka" />
+      </div>
+      <div class="form-group">
+        <label>Home Country / Region</label>
+        <input type="text" id="userCountry" placeholder="e.g. Japan, Brazil, Nigeria..." />
+      </div>
+      <div class="form-group">
+        <label>Target Job Role</label>
+        <select id="targetRole">
+          <option value="">Select a target role...</option>
+          <option value="Marketing Research Analyst">Marketing Research Analyst</option>
+          <option value="Digital Marketing Specialist">Digital Marketing Specialist</option>
+          <option value="Brand Manager">Brand Manager</option>
+          <option value="Social Media Strategist">Social Media Strategist</option>
+          <option value="Data & Analytics Marketer">Data & Analytics Marketer</option>
+          <option value="E-commerce Marketing Manager">E-commerce Marketing Manager</option>
+          <option value="Global Marketing Manager">Global Marketing Manager</option>
+          <option value="AI-Enabled Marketing Specialist">AI-Enabled Marketing Specialist</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Target Market / Region</label>
+        <select id="targetMarket">
+          <option value="">Select a target market...</option>
+          <option value="United States">United States</option>
+          <option value="Europe (EU)">Europe (EU)</option>
+          <option value="Southeast Asia">Southeast Asia</option>
+          <option value="Latin America">Latin America</option>
+          <option value="Middle East & Africa">Middle East & Africa</option>
+          <option value="Global / Multiple markets">Global / Multiple markets</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label>Marketing Interests (select all that apply)</label>
+        <div class="interest-chips" id="chips">
+          <div class="chip" data-val="consumer insights">Consumer Insights</div>
+          <div class="chip" data-val="data analytics">Data Analytics</div>
+          <div class="chip" data-val="social media">Social Media</div>
+          <div class="chip" data-val="content strategy">Content Strategy</div>
+          <div class="chip" data-val="e-commerce">E-commerce</div>
+          <div class="chip" data-val="brand strategy">Brand Strategy</div>
+          <div class="chip" data-val="SEO/SEM">SEO / SEM</div>
+          <div class="chip" data-val="market research">Market Research</div>
+          <div class="chip" data-val="AI tools">AI Tools</div>
+          <div class="chip" data-val="international marketing">International Marketing</div>
+          <div class="chip" data-val="influencer marketing">Influencer Marketing</div>
+          <div class="chip" data-val="marketing automation">Marketing Automation</div>
+        </div>
+      </div>
+      <div class="form-group full">
+        <label>Current Skills & Background (brief description)</label>
+        <textarea id="background" placeholder="e.g. I have experience with Excel and basic data analysis. I've run social media for a student organization and I'm comfortable with qualitative research. I want to work in consumer goods or tech."></textarea>
+      </div>
+    </div>
+
+    <button class="generate-btn" id="generateBtn" onclick="generateRoadmap()">
+      Generate My Roadmap <span class="btn-arrow">→</span>
+    </button>
+    <div class="error-box" id="errorBox"></div>
+  </div>
+
+  <!-- LOADING STATE -->
+  <div class="loading-state" id="loadingState">
+    <div class="loading-spinner"></div>
+    <div class="loading-step" id="loadingText">Analyzing your profile...</div>
+    <div class="loading-steps-list" id="loadingSteps">
+      <div class="loading-step-item active" id="step0"><div class="step-dot"></div>Matching your profile to live job requirements</div>
+      <div class="loading-step-item" id="step1"><div class="step-dot"></div>Cross-referencing WEF 2025 skills data</div>
+      <div class="loading-step-item" id="step2"><div class="step-dot"></div>Building your personalized skill path</div>
+      <div class="loading-step-item" id="step3"><div class="step-dot"></div>Selecting tool stack & free alternatives</div>
+      <div class="loading-step-item" id="step4"><div class="step-dot"></div>Generating your 12-month action plan</div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results"></div>
+
+</div>
+
+<script>
+  // ── CHIP TOGGLE ──
+  document.querySelectorAll('.chip').forEach(c => {
+    c.addEventListener('click', () => c.classList.toggle('active'));
+  });
+
+  function getSelectedChips() {
+    return [...document.querySelectorAll('.chip.active')].map(c => c.dataset.val);
+  }
+
+  // ── LOADING ANIMATION ──
+  let loadingInterval;
+  function startLoading() {
+    let step = 0;
+    const steps = document.querySelectorAll('.loading-step-item');
+    loadingInterval = setInterval(() => {
+      if (step < steps.length) {
+        if (step > 0) steps[step - 1].classList.replace('active', 'done');
+        steps[step].classList.add('active');
+        step++;
+      }
+    }, 900);
+  }
+  function stopLoading() {
+    clearInterval(loadingInterval);
+    document.querySelectorAll('.loading-step-item').forEach(s => {
+      s.classList.remove('active');
+      s.classList.add('done');
+    });
+  }
+
+  // ── MAIN GENERATE FUNCTION ──
+  async function generateRoadmap() {
+    const name = document.getElementById('userName').value.trim() || 'You';
+    const country = document.getElementById('userCountry').value.trim() || 'international';
+    const role = document.getElementById('targetRole').value;
+    const market = document.getElementById('targetMarket').value;
+    const interests = getSelectedChips();
+    const background = document.getElementById('background').value.trim();
+
+    if (!role || !background) {
+      const err = document.getElementById('errorBox');
+      err.textContent = 'Please select a target role and describe your background before generating.';
+      err.classList.add('visible');
+      return;
+    }
+    document.getElementById('errorBox').classList.remove('visible');
+
+    // Show loading, hide input
+    document.getElementById('inputCard').style.display = 'none';
+    document.getElementById('loadingState').classList.add('visible');
+    document.getElementById('generateBtn').disabled = true;
+    document.getElementById('results').classList.remove('visible');
+    startLoading();
+
+    const prompt = buildPrompt(name, country, role, market, interests, background);
+
+    try {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          messages: [{ role: 'user', content: prompt }]
+        })
+      });
+      const data = await response.json();
+      const raw = data.content?.map(b => b.text || '').join('') || '';
+      const clean = raw.replace(/```json|```/g, '').trim();
+      const parsed = JSON.parse(clean);
+      stopLoading();
+      document.getElementById('loadingState').classList.remove('visible');
+      renderResults(parsed, name, role, market, country);
+    } catch (e) {
+      stopLoading();
+      document.getElementById('loadingState').classList.remove('visible');
+      document.getElementById('inputCard').style.display = 'block';
+      document.getElementById('generateBtn').disabled = false;
+      const err = document.getElementById('errorBox');
+      err.textContent = 'Could not generate roadmap. Please try again in a moment.';
+      err.classList.add('visible');
+    }
+  }
+
+  function buildPrompt(name, country, role, market, interests, background) {
+    return `You are an expert AI career advisor for marketing professionals with deep knowledge of:
+- WEF Future of Jobs Report 2025 data: 170M new jobs by 2030, 39% skill change needed, top growing skills are AI & big data, networks/cybersecurity, technological literacy, creative thinking, resilience. Digital Marketing & Strategy Specialists are listed as a growing role. 85% of employers plan to upskill. 86% say AI will transform business.
+- Current job market for marketing analysts: employers seek data analytics, Qualtrics, SurveyMonkey, Google Trends, Semrush, SPSS, Excel, Power BI, SQL basics, insight synthesis, cross-functional collaboration, data literacy, strategic thinking.
+- BLS: Market Research Analyst median salary $76,950, +7% growth 2024-2034.
+- LinkedIn job data: AI-related skill mentions in marketing jobs up significantly. Top tools asked for: HubSpot, Salesforce, Google Analytics 4, Tableau/Power BI, Semrush, Canva, ChatGPT/Claude for research, Qualtrics.
+
+Student profile:
+- Name: ${name}
+- From: ${country}
+- Target role: ${role}
+- Target market: ${market || 'global'}
+- Interests: ${interests.join(', ') || 'general marketing'}
+- Background: ${background}
+
+Generate a personalized career roadmap as JSON ONLY (no markdown, no preamble). Structure:
+{
+  "headline": "A specific, personalized 1-sentence headline for their roadmap",
+  "marketSignal": "2-3 sentence insight about demand for their target role in their target market, grounded in real data",
+  "topSkills": [
+    {"name": "skill name", "priority": "high|med|low", "why": "1-sentence reason relevant to their profile and target role", "wefBacked": true|false}
+  ],
+  "toolStack": [
+    {"tool": "tool name", "type": "free|paid|freemium", "use": "what they use it for in marketing", "core": true|false}
+  ],
+  "timeline": [
+    {"period": "Months 1-3", "title": "phase title", "focus": "what to do", "actions": ["action1", "action2", "action3"]}
+  ],
+  "wefInsight": "A specific, direct quote/paraphrase from WEF 2025 data relevant to their interests and role",
+  "linkedinKeywords": ["keyword1", "keyword2", "keyword3", "keyword4", "keyword5", "keyword6"],
+  "portfolioTip": "One specific tip for making their portfolio stand out for this exact role"
+}
+
+Return 6-8 skills, 8-10 tools (mix of free and paid), 4 timeline phases (0-3mo, 3-6mo, 6-9mo, 9-12mo), 6 linkedin keywords. JSON only.`;
+  }
+
+  // ── RENDER RESULTS ──
+  function renderResults(d, name, role, market, country) {
+    const r = document.getElementById('results');
+    r.classList.add('visible');
+
+    const priorityClass = p => p === 'high' ? 'p-high' : p === 'med' ? 'p-med' : 'p-low';
+    const priorityLabel = p => p === 'high' ? '!' : p === 'med' ? '2' : '3';
+    const typeTag = t => t === 'free' ? '<span class="tool-tag tag-free">Free</span>' : t === 'paid' ? '<span class="tool-tag tag-paid">Paid</span>' : '<span class="tool-tag tag-paid">Freemium</span>';
+    const coreTag = c => c ? '<span class="tool-tag tag-core">Core</span>' : '';
+
+    r.innerHTML = `
+      <div class="results-header">
+        <div>
+          <div class="section-label">Your Personalized Roadmap</div>
+          <div class="results-name">${name}'s Path to ${role}</div>
+          <div class="results-meta">${country ? country + ' → ' : ''}${market || 'Global Market'} · Powered by WEF 2025, BLS, & live job data</div>
+        </div>
+        <button class="reset-btn" onclick="resetTool()">← Start Over</button>
+      </div>
+
+      ${d.headline ? `<div class="wef-box" style="margin-bottom:28px;background:var(--teal);">
+        <div class="wef-label">Your Market Signal</div>
+        <div class="wef-quote">${d.marketSignal || d.headline}</div>
+      </div>` : ''}
+
+      <!-- SKILLS -->
+      <div class="roadmap-section">
+        <div class="roadmap-card">
+          <div class="card-header">
+            <div class="card-icon icon-gold">🎯</div>
+            <div class="card-header-text">
+              <div class="card-title">Priority Skill Path</div>
+              <div class="card-subtitle">Ranked by urgency for your target role · WEF-validated skills marked ★</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="skills-grid">
+              ${(d.topSkills || []).map(s => `
+                <div class="skill-item">
+                  <div class="skill-priority ${priorityClass(s.priority)}">${priorityLabel(s.priority)}</div>
+                  <div>
+                    <div class="skill-name">${s.name}${s.wefBacked ? ' <span style="color:var(--gold)">★</span>' : ''}</div>
+                    <div class="skill-why">${s.why}</div>
+                  </div>
+                </div>`).join('')}
+            </div>
+            <div style="margin-top:16px;font-size:11px;color:var(--muted);">
+              <strong style="color:var(--coral)">!</strong> = Start now &nbsp;|&nbsp; <strong style="color:var(--gold)">2</strong> = Next 6 months &nbsp;|&nbsp; <strong style="color:var(--teal)">3</strong> = Year 2 &nbsp;|&nbsp; <strong style="color:var(--gold)">★</strong> = WEF 2025 fastest-growing skill
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOL STACK -->
+      <div class="roadmap-section">
+        <div class="roadmap-card">
+          <div class="card-header">
+            <div class="card-icon icon-teal">🛠️</div>
+            <div class="card-header-text">
+              <div class="card-title">Recommended Tool Stack</div>
+              <div class="card-subtitle">Full stack + free/low-cost alternatives for each category</div>
+            </div>
+          </div>
+          <div class="card-body">
+            ${(d.toolStack || []).map(t => `
+              <div class="tool-row">
+                <div class="tool-name">${t.tool}</div>
+                <div class="tool-tags">${typeTag(t.type)}${coreTag(t.core)}</div>
+                <div class="tool-use">${t.use}</div>
+              </div>`).join('')}
+          </div>
+        </div>
+      </div>
+
+      <!-- TIMELINE -->
+      <div class="roadmap-section">
+        <div class="roadmap-card">
+          <div class="card-header">
+            <div class="card-icon icon-coral">📅</div>
+            <div class="card-header-text">
+              <div class="card-title">12-Month Action Plan</div>
+              <div class="card-subtitle">From today to job-ready</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="timeline">
+              ${(d.timeline || []).map((t, i) => `
+                <div class="timeline-item">
+                  <div class="timeline-left">
+                    <div class="timeline-dot">${i + 1}</div>
+                    <div class="timeline-line"></div>
+                  </div>
+                  <div class="timeline-content">
+                    <div class="timeline-period">${t.period}</div>
+                    <div class="timeline-title">${t.title}</div>
+                    <div style="font-size:13px;color:var(--muted);line-height:1.6;">${t.focus}</div>
+                    <div class="timeline-items">
+                      ${(t.actions || []).map(a => `<div class="timeline-pill">${a}</div>`).join('')}
+                    </div>
+                  </div>
+                </div>`).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WEF INSIGHT -->
+      ${d.wefInsight ? `
+      <div class="roadmap-section">
+        <div class="wef-box">
+          <div class="wef-label">WEF Future of Jobs Report 2025</div>
+          <div class="wef-quote">${d.wefInsight} <br><br>
+          <strong>What this means for you:</strong> The students who enter the workforce understanding how to work <em>with</em> AI — not just around it — will be in the top tier of candidates globally.</div>
+        </div>
+      </div>` : ''}
+
+      <!-- PORTFOLIO TIP -->
+      ${d.portfolioTip ? `
+      <div class="roadmap-section">
+        <div class="roadmap-card">
+          <div class="card-header">
+            <div class="card-icon icon-gold">💼</div>
+            <div class="card-header-text">
+              <div class="card-title">Portfolio Tip for ${role}</div>
+              <div class="card-subtitle">How to stand out to employers in your target market</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <p style="font-size:14px;line-height:1.7;color:var(--ink);">${d.portfolioTip}</p>
+          </div>
+        </div>
+      </div>` : ''}
+
+      <!-- LINKEDIN -->
+      ${d.linkedinKeywords?.length ? `
+      <div class="roadmap-section">
+        <div class="linkedin-card">
+          <div class="linkedin-title">LinkedIn Keywords to Add to Your Profile</div>
+          <div class="linkedin-desc">Add these to your headline, About section, and Skills to surface in recruiter searches for ${role} roles.</div>
+          <div class="linkedin-tags">
+            ${d.linkedinKeywords.map(k => `<div class="linkedin-tag">${k}</div>`).join('')}
+          </div>
+        </div>
+      </div>` : ''}
+
+      <!-- SOURCES FOOTER -->
+      <div class="sources-footer">
+        <div class="sources-title">Data Sources Used to Generate This Roadmap</div>
+        <div class="sources-list">
+          <div class="source-pill"><span>WEF</span> Future of Jobs Report 2025 (1,000+ employers, 55 economies)</div>
+          <div class="source-pill"><span>BLS</span> Occupational Outlook Handbook 2024 — Market Research Analysts</div>
+          <div class="source-pill"><span>Indeed / Glassdoor</span> Live job postings synthesis, Marketing Analyst roles</div>
+          <div class="source-pill"><span>LinkedIn</span> Skills in demand data, Marketing & AI roles 2025</div>
+          <div class="source-pill"><span>BU MET</span> MS Global Marketing Management curriculum alignment</div>
+        </div>
+      </div>
+    `;
+
+    r.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function resetTool() {
+    document.getElementById('results').classList.remove('visible');
+    document.getElementById('results').innerHTML = '';
+    document.getElementById('inputCard').style.display = 'block';
+    document.getElementById('generateBtn').disabled = false;
+    document.querySelectorAll('.loading-step-item').forEach(s => {
+      s.className = 'loading-step-item';
+    });
+    document.getElementById('loadingState').classList.remove('visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>

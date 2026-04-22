@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kova — Marketing Analyst Simulation</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0c0f;
+  --surface: #141418;
+  --surface2: #1c1c22;
+  --border: #2a2a35;
+  --border2: #353545;
+  --text: #e8e8f0;
+  --muted: #7070a0;
+  --dim: #4a4a70;
+  --teal: #00d4aa;
+  --teal-dim: rgba(0,212,170,0.12);
+  --teal-border: rgba(0,212,170,0.3);
+  --gold: #f5c842;
+  --gold-dim: rgba(245,200,66,0.1);
+  --coral: #ff6b6b;
+  --coral-dim: rgba(255,107,107,0.1);
+  --purple: #a78bfa;
+  --purple-dim: rgba(167,139,250,0.1);
+  --blue: #60a5fa;
+  --blue-dim: rgba(96,165,250,0.1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── TOP BAR ── */
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+  color: var(--teal);
+}
+.logo span { color: var(--text); }
+.progress-bar-wrap {
+  flex: 1;
+  max-width: 320px;
+  margin: 0 32px;
+}
+.progress-label {
+  font-size: 11px;
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.progress-track {
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--teal), var(--gold));
+  border-radius: 2px;
+  transition: width 0.6s ease;
+}
+.save-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 7px 14px;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--muted);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.05em;
+}
+.save-btn:hover { border-color: var(--teal); color: var(--teal); }
+
+/* ── LAYOUT ── */
+.layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  flex: 1;
+  min-height: calc(100vh - 56px);
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 24px 0;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 56px;
+  height: calc(100vh - 56px);
+  overflow-y: auto;
+}
+.sidebar-section {
+  padding: 0 16px;
+  margin-bottom: 24px;
+}
+.sidebar-label {
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--dim);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 0 8px;
+  margin-bottom: 8px;
+}
+.character-btn {
+  width: 100%;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-bottom: 4px;
+  text-align: left;
+}
+.character-btn:hover { background: var(--surface2); border-color: var(--border); }
+.character-btn.active { background: var(--teal-dim); border-color: var(--teal-border); }
+.character-btn.locked { opacity: 0.35; cursor: not-allowed; }
+.char-avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.char-info { flex: 1; }
+.char-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 3px;
+}
+.char-role {
+  font-size: 11px;
+  color: var(--muted);
+}
+.char-badge {
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.badge-new { background: rgba(0,212,170,0.15); color: var(--teal); }
+.badge-done { background: rgba(167,139,250,0.15); color: var(--purple); }
+.badge-lock { background: var(--border); color: var(--dim); }
+
+.phase-item {
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 1px solid transparent;
+}
+.phase-item:hover:not(.phase-locked) { background: var(--surface2); }
+.phase-item.phase-active { background: var(--gold-dim); border-color: rgba(245,200,66,0.2); }
+.phase-item.phase-locked { opacity: 0.35; cursor: not-allowed; }
+.phase-item.phase-done { opacity: 0.6; }
+.phase-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.phase-name { font-size: 12px; font-weight: 500; }
+
+/* ── MAIN CHAT AREA ── */
+.main {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat-header {
+  padding: 20px 32px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.active-char-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+}
+.active-char-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+}
+.active-char-role { font-size: 13px; color: var(--muted); margin-top: 2px; }
+.status-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--teal);
+  margin-left: auto;
+  box-shadow: 0 0 6px var(--teal);
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.messages::-webkit-scrollbar { width: 4px; }
+.messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.msg {
+  display: flex;
+  gap: 12px;
+  animation: msgIn 0.3s ease both;
+}
+@keyframes msgIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.msg.user { flex-direction: row-reverse; }
+.msg-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.msg-body { max-width: 72%; }
+.msg-sender {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 5px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.msg.user .msg-sender { text-align: right; }
+.msg-bubble {
+  padding: 13px 17px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.msg-bubble p { margin-bottom: 8px; }
+.msg-bubble p:last-child { margin-bottom: 0; }
+.msg-bubble strong { color: var(--teal); }
+.msg-bubble em { color: var(--gold); font-style: normal; font-weight: 500; }
+.ai-bubble {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 4px 12px 12px 12px;
+  color: var(--text);
+}
+.user-bubble {
+  background: var(--teal-dim);
+  border: 1px solid var(--teal-border);
+  border-radius: 12px 4px 12px 12px;
+  color: var(--text);
+}
+.msg-bubble ul { margin: 8px 0 8px 20px; }
+.msg-bubble li { margin-bottom: 4px; }
+
+/* Coaching callout */
+.coaching-box {
+  background: var(--gold-dim);
+  border: 1px solid rgba(245,200,66,0.25);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--gold);
+}
+.coaching-box strong { display: block; margin-bottom: 4px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; }
+
+/* unlock card */
+.unlock-card {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 8px;
+}
+.unlock-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 6px;
+  color: var(--teal);
+}
+.unlock-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+.unlock-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+.unlock-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s;
+}
+.btn-primary { background: var(--teal); color: var(--bg); }
+.btn-primary:hover { opacity: 0.85; }
+.btn-secondary { background: var(--surface); border: 1px solid var(--border2); color: var(--text); }
+.btn-secondary:hover { border-color: var(--teal); color: var(--teal); }
+
+/* typing indicator */
+.typing {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.typing-dots {
+  display: flex; gap: 4px; padding: 13px 17px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 4px 12px 12px 12px;
+}
+.typing-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--muted);
+  animation: bounce 1.2s infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes bounce {
+  0%,60%,100% { transform: translateY(0); }
+  30% { transform: translateY(-6px); }
+}
+
+/* input bar */
+.input-bar {
+  border-top: 1px solid var(--border);
+  padding: 16px 32px;
+  background: var(--surface);
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+.input-wrap { flex: 1; position: relative; }
+textarea#userInput {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  padding: 12px 16px;
+  resize: none;
+  outline: none;
+  max-height: 120px;
+  min-height: 46px;
+  line-height: 1.5;
+  transition: border-color 0.15s;
+}
+textarea#userInput:focus { border-color: var(--teal); }
+textarea#userInput::placeholder { color: var(--dim); }
+.send-btn {
+  width: 46px; height: 46px;
+  border-radius: 10px;
+  background: var(--teal);
+  border: none;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.send-btn:hover { opacity: 0.85; transform: scale(1.05); }
+.send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+/* prompt helper */
+.prompt-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 12px 32px 0;
+  background: var(--surface);
+}
+.p-chip {
+  font-size: 12px;
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  cursor: pointer;
+  color: var(--muted);
+  transition: all 0.15s;
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+}
+.p-chip:hover { border-color: var(--teal); color: var(--teal); }
+
+/* save modal */
+.modal-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 520px;
+  width: 90%;
+}
+.modal-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+.modal-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
+.save-url {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--teal);
+  word-break: break-all;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  cursor: text;
+}
+.modal-actions { display: flex; gap: 10px; }
+.modal-btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s;
+  font-family: 'Inter', sans-serif;
+}
+
+/* notification */
+.notif {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  background: var(--teal);
+  color: var(--bg);
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s;
+  z-index: 2000;
+  pointer-events: none;
+}
+.notif.show { opacity: 1; transform: translateY(0); }
+
+/* Completion banner */
+.completion-banner {
+  background: linear-gradient(135deg, var(--teal-dim), var(--gold-dim));
+  border: 1px solid var(--teal-border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  text-align: center;
+}
+.completion-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--teal);
+  margin-bottom: 6px;
+}
+.completion-desc { font-size: 13px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div style="display:flex;align-items:center;gap:20px">
+    <div class="logo">KOVA<span> Simulation</span></div>
+    <div style="width:1px;height:24px;background:var(--border)"></div>
+    <a href="https://atolilabs.co" target="_blank" style="text-decoration:none;display:flex;align-items:center;gap:7px">
+      <span style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase">Powered by</span>
+      <span style="font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:var(--teal);letter-spacing:-0.01em">Atoli Labs</span>
+    </a>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-label" id="progressLabel">Phase 1 of 5 — Onboarding</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:10%"></div></div>
+  </div>
+  <button class="save-btn" onclick="saveProgress()">💾 Save Progress</button>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">The Team</div>
+      <button class="character-btn active" onclick="switchChar('jordan')" id="btn-jordan">
+        <div class="char-avatar" style="background:rgba(0,212,170,0.15)">🧑‍💼</div>
+        <div class="char-info">
+          <div class="char-name">Jordan</div>
+          <div class="char-role">Your Manager</div>
+        </div>
+        <span class="char-badge badge-new" id="badge-jordan">NEW</span>
+      </button>
+      <button class="character-btn locked" onclick="switchChar('mei')" id="btn-mei">
+        <div class="char-avatar" style="background:rgba(96,165,250,0.15)">👩‍💼</div>
+        <div class="char-info">
+          <div class="char-name">Mei</div>
+          <div class="char-role">CMO, Kova</div>
+        </div>
+        <span class="char-badge badge-lock" id="badge-mei">🔒</span>
+      </button>
+      <button class="character-btn locked" onclick="switchChar('rafael')" id="btn-rafael">
+        <div class="char-avatar" style="background:rgba(255,107,107,0.15)">👨‍💼</div>
+        <div class="char-info">
+          <div class="char-name">Rafael</div>
+          <div class="char-role">Head of Sales</div>
+        </div>
+        <span class="char-badge badge-lock" id="badge-rafael">🔒</span>
+      </button>
+      <button class="character-btn locked" onclick="switchChar('priya')" id="btn-priya">
+        <div class="char-avatar" style="background:rgba(167,139,250,0.15)">👩‍🔬</div>
+        <div class="char-info">
+          <div class="char-name">Priya</div>
+          <div class="char-role">Customer Success</div>
+        </div>
+        <span class="char-badge badge-lock" id="badge-priya">🔒</span>
+      </button>
+      <button class="character-btn locked" onclick="switchChar('data')" id="btn-data">
+        <div class="char-avatar" style="background:rgba(245,200,66,0.15)">📊</div>
+        <div class="char-info">
+          <div class="char-name">DataSystem</div>
+          <div class="char-role">Internal Analytics</div>
+        </div>
+        <span class="char-badge badge-lock" id="badge-data">🔒</span>
+      </button>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Portfolio Sections</div>
+      <div class="phase-item phase-active" id="phase-1">
+        <div class="phase-num">Section 1</div>
+        <div class="phase-name">Market Landscape Analysis</div>
+      </div>
+      <div class="phase-item phase-locked" id="phase-2">
+        <div class="phase-num">Section 2</div>
+        <div class="phase-name">Consumer Persona Development</div>
+      </div>
+      <div class="phase-item phase-locked" id="phase-3">
+        <div class="phase-num">Section 3</div>
+        <div class="phase-name">Competitive Intelligence</div>
+      </div>
+      <div class="phase-item phase-locked" id="phase-4">
+        <div class="phase-num">Section 4</div>
+        <div class="phase-name">Campaign Positioning</div>
+      </div>
+      <div class="phase-item phase-locked" id="phase-5">
+        <div class="phase-num">Section 5</div>
+        <div class="phase-name">AI Tools Reflection</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="chat-header" id="chatHeader">
+      <div class="active-char-avatar" id="activeAvatar" style="background:rgba(0,212,170,0.15)">🧑‍💼</div>
+      <div>
+        <div class="active-char-name" id="activeName">Jordan Chen</div>
+        <div class="active-char-role" id="activeRole">Marketing Manager · Kova Global</div>
+      </div>
+      <div class="status-dot"></div>
+    </div>
+
+    <div class="prompt-chips" id="promptChips">
+      <button class="p-chip" onclick="useChip(this)">Tell me more about the project</button>
+      <button class="p-chip" onclick="useChip(this)">Who should I talk to first?</button>
+      <button class="p-chip" onclick="useChip(this)">What's the timeline?</button>
+      <button class="p-chip" onclick="useChip(this)">What does success look like?</button>
+    </div>
+
+    <div class="messages" id="messages"></div>
+
+    <div class="input-bar">
+      <div class="input-wrap">
+        <textarea id="userInput" placeholder="Type your message..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+      </div>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">↑</button>
+    </div>
+  </div>
+</div>
+
+<!-- SAVE MODAL -->
+<div class="modal-overlay" id="saveModal">
+  <div class="modal">
+    <div class="modal-title">💾 Save Your Progress</div>
+    <div class="modal-desc">Copy this link and bookmark it. When you return, paste it in your browser to resume exactly where you left off. Share this link with your instructor at the end of semester.</div>
+    <div class="save-url" id="saveUrl">Generating...</div>
+    <div class="modal-actions">
+      <button class="modal-btn btn-primary" onclick="copyUrl()">Copy Link</button>
+      <button class="modal-btn btn-secondary" onclick="closeModal()">Close</button>
+    </div>
+    <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:var(--teal)">Atoli Labs</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">AI-powered learning experiences</div>
+      </div>
+      <a href="https://atolilabs.co" target="_blank" style="font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;text-decoration:none;letter-spacing:0.05em;transition:color 0.15s" onmouseover="this.style.color='var(--teal)'" onmouseout="this.style.color='var(--muted)'">atolilabs.co →</a>
+    </div>
+  </div>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<script>
+// ── STATE ──
+let state = {
+  phase: 'onboarding', // onboarding | briefing | interviews | reporting | research | complete
+  unlockedChars: ['jordan'],
+  talkedTo: [],
+  interviewSummary: {},
+  problemStatement: '',
+  portfolioSections: {},
+  currentChar: 'jordan',
+  onboardingStep: 0,
+  reportingStep: 0,
+  history: { jordan: [], mei: [], rafael: [], priya: [], data: [] }
+};
+
+// ── CHARACTERS CONFIG ──
+const CHARS = {
+  jordan: {
+    name: 'Jordan Chen', role: 'Marketing Manager · Kova Global',
+    avatar: '🧑‍💼', color: 'rgba(0,212,170,0.15)', accent: '#00d4aa',
+    systemPrompt: `You are Jordan Chen, a supportive but intellectually demanding Marketing Manager at Kova, a premium sparkling tea brand from Singapore expanding into the US market. You've just hired a new Marketing Research Analyst (the student).
+
+Your personality: warm but professional, Socratic — you NEVER give direct answers, always coach through questions. You believe good analysts ask better questions before they research.
+
+The business problem: Kova needs a data-backed go/no-go recommendation on which US city to launch in first, and which consumer segment to prioritize. The board needs this in 6 weeks.
+
+SIMULATION PHASES — follow this arc precisely:
+1. ONBOARDING (first 3 exchanges): Welcome them, explain their role, make them feel excited. Tell them Mei (CMO), Rafael (Head of Sales), Priya (Customer Success), and the DataSystem have all agreed to talk. Tell them to start with Mei for strategic context, then Rafael for market perspective, then Priya for customer insight, then DataSystem for hard data. Unlock order matters.
+2. BRIEFING: After they ask questions, summarize what they need to find out.
+3. INTERVIEW COACHING: When they return after interviews, ask them: "What did you learn?" and "What gaps remain?" Coach them Socratically to form a strong problem statement.
+4. PROMPT EDITING PHASE: After showing the base research prompt, ask the student what they would change or add based on what they learned from the team. This is critical — you want them to think about how their interview insights should sharpen the AI prompt. If they give vague answers, push them: "Be specific — what did Rafael tell you about cities?" or "What did DataSystem's waitlist data tell you?" Validate good edits warmly. A good answer includes: prioritizing NYC and Austin specifically, adding the health claim requirement (from Priya), adding Recess as a competitor (from Rafael), mentioning yoga/wellness studios as a channel.
+5. RESEARCH DIRECTION: Once they've shared their prompt edits, tell them they're ready and transition to showing the final research card.
+6. SECTION UNLOCKING: After Section 1, tell them you'll email them the next section brief. Say the simulation will send them a checkpoint.
+
+Keep responses conversational, 2-4 short paragraphs max. Use ">" for a coaching question at the end. Never break character.`
+  },
+  mei: {
+    name: 'Mei Zhang', role: 'Chief Marketing Officer · Kova',
+    avatar: '👩‍💼', color: 'rgba(96,165,250,0.15)', accent: '#60a5fa',
+    systemPrompt: `You are Mei Zhang, CMO of Kova, a premium sparkling tea brand from Singapore. You're sharp, strategic, always thinking about board-level narrative. You speak in outcomes, not tactics.
+
+Your partial truth about Kova's US expansion:
+- Kova has been operating 3 years in Singapore, Malaysia, Thailand with strong Gen Z/millennial traction
+- US expansion budget: $2.4M for year 1 (split: 40% marketing, 35% distribution, 25% ops)
+- The board wants ONE city launch first — test, learn, scale. Not a nationwide rollout.
+- Your instinct: LA or NYC, but you don't have the data to back it up yet. That's why you hired the analyst.
+- Kova's brand: "functional beauty from within" — adaptogens, collagen, zero sugar. Premium positioning.
+- You're worried about cultural translation — Kova is deeply Asian in aesthetic and philosophy.
+- You have 20 minutes. You're always about to leave for another meeting.
+
+Personality: decisive, slightly impatient, respects people who come prepared. If they ask vague questions, say "I need specifics — what exactly are you trying to understand?" If they ask sharp questions, open up and share more.
+
+Give partial information — don't hand everything over. Make them work for it. If they ask about competitors, say "That's Rafael's territory." If they ask about customers, say "Talk to Priya — she's closer to that."
+
+Keep answers to 2-3 short paragraphs. Always end with something that redirects them or creates urgency.`
+  },
+  rafael: {
+    name: 'Rafael Morales', role: 'Head of Sales · Kova',
+    avatar: '👨‍💼', color: 'rgba(255,107,107,0.15)', accent: '#ff6b6b',
+    systemPrompt: `You are Rafael Morales, Head of Sales at Kova. You're confident, data-driven about sales, slightly skeptical of "marketing people" but you warm up fast if they ask smart questions. You have strong opinions.
+
+Your partial truth:
+- You've done 3 US trade show pilots: Expo West (Anaheim), Natural Products Expo (NYC), and a Fancy Food Show (SF)
+- BEST response was from NYC and Austin buyers. LA buyers said "interesting" but didn't follow up much.
+- Your #1 insight: US distributors are asking for a hero SKU — one flavor that works everywhere. Currently Kova has 6 SKUs. Too many.
+- Competitors you keep losing deals to at trade shows: OLIPOP, Poppi, and increasingly Recess (hemp adaptogen drinks)
+- Price point concern: $4.50-5.50 is right BUT the retail channel matters hugely — Whole Foods yes, CVS probably not
+- Austin and Nashville are WAY more open to innovation than LA right now. LA is saturated.
+- You don't trust the data from Singapore operations — US consumer is completely different.
+
+Personality: direct, uses sports analogies, interrupts himself sometimes. Not hostile but doesn't sugarcoat. If they ask weak questions like "what do you think about the market?" push back: "That's too broad. Ask me something specific."
+
+Give concrete numbers and opinions but sometimes contradict what Mei said (she's too optimistic). You have war stories from trade shows.`
+  },
+  priya: {
+    name: 'Priya Patel', role: 'Head of Customer Success · Kova',
+    avatar: '👩‍🔬', color: 'rgba(167,139,250,0.15)', accent: '#a78bfa',
+    systemPrompt: `You are Priya Patel, Head of Customer Success at Kova. You're warm, empathetic, and extremely close to customers — you read every support ticket and do biweekly customer calls. You love sharing customer stories.
+
+Your partial truth (qualitative gold):
+- In Singapore, your top customers are women 25-38, health-conscious, aesthetic-motivated. They buy Kova because it "feels like a ritual, not a supplement."
+- You've done 12 informal interviews with US consumers through your personal network. Key insight: American consumers need a clearer health CLAIM — "functional" is not enough. They want "helps with X."
+- The word "tea" is confusing to US consumers — they expect something hot, in a bag. You've seen 3 focus group participants call it "kombucha but fancy."
+- Customer retention: 73% of Singapore subscribers reorder within 60 days. Your BEST customers are in "wellness communities" — yoga studios, pilates, running clubs.
+- Potential partnership idea: wellness studios as sampling channel. You tested this informally with a friend's yoga studio in Boston. 8/10 people who sampled bought online within a week.
+- Biggest concern: US influencer culture is different — Singapore KOLs vs US macro-influencers. The ROI math doesn't work the same way.
+
+Personality: storyteller, uses customer names (make them up), very passionate. Ask them follow-up questions too — "what do YOU think about that?" You believe the qualitative insight is just as important as the data.`
+  },
+  data: {
+    name: 'DataSystem', role: 'Internal Analytics Platform · Kova',
+    avatar: '📊', color: 'rgba(245,200,66,0.15)', accent: '#f5c842',
+    systemPrompt: `You are Kova's internal DataSystem — an analytics platform that returns structured data. You don't have opinions. You respond ONLY to specific queries. If a question is vague, you return: "QUERY_ERROR: Insufficient parameters. Please specify metric, timeframe, and segment."
+
+Available data you can return (make realistic numbers consistent with a $8M ARR Singapore/SEA brand):
+- Revenue by market: Singapore 68%, Malaysia 22%, Thailand 10%
+- Top performing SKU: Yuzu Citrus Adaptogen (38% of revenue)
+- Customer LTV Singapore: $187 avg over 12 months
+- NPS score: 71 (Singapore), 64 (Malaysia)  
+- Instagram engagement rate: 6.2% (high for CPG)
+- Website traffic US-origin: 12% of total (growing 40% QoQ)
+- US waitlist: 2,847 emails collected from past 18 months
+- Top US cities on waitlist: NYC (31%), LA (19%), Austin (14%), Seattle (11%), Chicago (8%), Other (17%)
+- Email open rate US waitlist: 48% (very high — these are highly engaged)
+- Average order value (when US customers order via international shipping): $62
+- Social listening: #KovaGlow mentions up 340% in past 6 months, predominantly US-origin
+
+If they ask about something you don't have: "DATA_UNAVAILABLE: This metric is not in current dataset. Recommend external research."
+
+Format all responses like a system readout — structured, labeled, no fluff. Use → for data points.`
+  }
+};
+
+const CHAR_ORDER = ['jordan', 'mei', 'rafael', 'priya', 'data'];
+
+// ── INIT ──
+window.onload = () => {
+  loadFromUrl();
+  renderSidebar();
+  startJordan();
+};
+
+function startJordan() {
+  const opening = `Welcome aboard! I'm Jordan Chen, your manager here at Kova. Really glad you could join us — we've been looking for the right person for this role, and your background stood out.
+
+I want to jump right in because we're under a bit of time pressure. <strong>Here's the situation:</strong> Kova has been growing fast in Southeast Asia, but the board has approved our US market entry. The question is: <em>where do we launch first, and who do we go after?</em> That's where you come in.
+
+Your title is Marketing Research Analyst. Your first deliverable is a full market landscape brief that we'll take to the board in 6 weeks. Before you start any research, I want you to hear directly from the team — they each have a piece of the puzzle.
+
+> What questions do you have for me before we get started?`;
+
+  addMessage('jordan', opening, false);
+  updatePromptChips('jordan', 'onboarding');
+}
+
+// ── MESSAGE HANDLING ──
+async function sendMessage() {
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if (!text) return;
+  
+  input.value = '';
+  autoResize(input);
+  document.getElementById('sendBtn').disabled = true;
+  
+  addMessage('user', text, true);
+  saveHistory(state.currentChar, text, true);
+  
+  showTyping();
+  
+  const reply = await callAPI(state.currentChar, text);
+  
+  hideTyping();
+  addMessage(state.currentChar, reply, false);
+  saveHistory(state.currentChar, reply, false);
+  
+  // Check phase progression
+  checkProgression(text, reply);
+  
+  document.getElementById('sendBtn').disabled = false;
+  persistState();
+}
+
+async function callAPI(char, userMsg) {
+  const charData = CHARS[char];
+  const hist = state.history[char] || [];
+  
+  // Build messages
+  const messages = [];
+  for (let i = 0; i < hist.length - 1; i++) {
+    messages.push({ role: hist[i].user ? 'user' : 'assistant', content: hist[i].text });
+  }
+  messages.push({ role: 'user', content: userMsg });
+  
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: charData.systemPrompt,
+        messages
+      })
+    });
+    const data = await res.json();
+    return data.content?.[0]?.text || 'Sorry, I lost my train of thought. Try again?';
+  } catch (e) {
+    return 'Network issue — please try again in a moment.';
+  }
+}
+
+function checkProgression(userMsg, aiReply) {
+  const msg = userMsg.toLowerCase();
+  
+  // Unlock characters after initial Jordan conversation
+  if (state.currentChar === 'jordan' && state.phase === 'onboarding') {
+    if (state.history.jordan.length >= 4) {
+      state.phase = 'interviews';
+      unlockChar('mei');
+      unlockChar('rafael');
+      unlockChar('priya');
+      unlockChar('data');
+      updateProgress(30, 'Phase 2 of 5 — Stakeholder Interviews');
+    }
+  }
+  
+  // Detect reporting back to Jordan
+  if (state.currentChar === 'jordan' && state.phase === 'interviews') {
+    const hasInterviewed = state.talkedTo.length >= 2;
+    if (hasInterviewed && (msg.includes('learn') || msg.includes('found') || msg.includes('talked') || msg.includes('interview') || msg.includes('spoke') || msg.includes('report'))) {
+      state.phase = 'reporting';
+      updateProgress(55, 'Phase 3 of 5 — Problem Framing');
+    }
+  }
+  
+  // Detect problem statement submitted
+  if (state.currentChar === 'jordan' && state.phase === 'reporting') {
+    if (msg.includes('problem statement') || msg.includes('the problem is') || msg.includes('objective is') || msg.includes('question is') || msg.includes('research question') || msg.length > 60) {
+      state.phase = 'research';
+      updateProgress(75, 'Phase 4 of 5 — Section 1 Research');
+      setTimeout(() => showResearchUnlock(), 1000);
+    }
+  }
+
+  // Detect prompt editing response — student has shared what they'd change
+  if (state.currentChar === 'jordan' && state.phase === 'prompt_editing') {
+    const editSignals = ['add', 'include', 'change', 'edit', 'update', 'specify', 'mention', 'austin', 'nyc', 'york', 'health claim', 'yoga', 'studio', 'rafael', 'priya', 'mei', 'waitlist', 'trade show', 'channel', 'whole foods'];
+    const hasEditSignal = editSignals.some(w => msg.includes(w));
+    if (hasEditSignal || msg.length > 80) {
+      state.phase = 'final_research';
+      updateProgress(85, 'Phase 4 of 5 — Running Your Research');
+      setTimeout(() => showFinalPromptUnlock(), 1200);
+    }
+  }
+  
+  // Track who has been talked to
+  if (state.currentChar !== 'jordan' && !state.talkedTo.includes(state.currentChar)) {
+    if (state.history[state.currentChar].length >= 2) {
+      state.talkedTo.push(state.currentChar);
+      markCharDone(state.currentChar);
+    }
+  }
+}
+
+function showResearchUnlock() {
+  // Phase A: Jordan presents the BASE prompt and asks them to edit it first
+  const coachMsg = `Good work. You now know more about Kova than most people who've worked here for months.
+
+Before I hand you the research prompt, I want you to do something that separates good analysts from great ones.
+
+<strong>Look at what you actually learned from the team:</strong>
+<ul>
+<li>Mei told you this is "functional beauty from within" — not just wellness</li>
+<li>Rafael said Austin and Nashville are outperforming LA at trade shows, and that Whole Foods is the right channel, not CVS</li>
+<li>Priya told you US consumers need a specific health claim, not just "functional" — and that yoga studios could be a sampling channel</li>
+<li>DataSystem showed you NYC is 31% of your waitlist, Austin is 14%, and US traffic is up 40% quarter-on-quarter</li>
+</ul>
+
+A generic AI prompt won't capture any of that. <em style="color:var(--gold)">A good analyst edits the prompt to reflect what they know before they run it.</em>
+
+Here's the base prompt. <strong>Before you use it, tell me: what would you change or add based on what you learned from the team?</strong>
+
+> What specific details from your interviews would you add to make this prompt sharper?`;
+
+  addMessage('jordan', coachMsg, false);
+  saveHistory('jordan', coachMsg, false);
+  state.phase = 'prompt_editing';
+  updateProgress(78, 'Phase 4 of 5 — Sharpening Your Prompt');
+
+  // Show the base prompt card below
+  setTimeout(() => {
+    const basePromptCard = `<div class="unlock-card" style="border-color:var(--border2)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px">Base Prompt — Edit Before Using</div>
+      <div style="background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:14px;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.75;color:var(--teal)">You are a senior market research analyst. Kova is a premium sparkling functional tea brand from Singapore, $4.50–5.50 price point, wellness and adaptogens positioning, targeting US market entry. Research and provide: (1) US functional beverage market size and growth rate 2023–2026, (2) Top 3 US cities ranked by wellness consumer density, health food retail density, and household income above $75K, (3) Primary consumer segments most likely to adopt premium functional tea — demographics, psychographics, buying behavior, (4) Competitive landscape: OLIPOP, Poppi, GT's Kombucha, Recess — positioning, price, channel, gap analysis, (5) Cultural and brand translation considerations for an Asian-origin brand entering the US. Format as a structured analyst report with headers. Cite data sources where possible.</div>
+      <div style="margin-top:14px;font-size:12px;color:var(--muted);line-height:1.6">
+        <strong style="color:var(--gold);display:block;margin-bottom:6px">Things you might add based on your interviews:</strong>
+        <span style="display:block;padding:5px 0;border-bottom:1px solid var(--border)">→ Prioritize NYC and Austin specifically — based on waitlist data (NYC 31%) and trade show traction</span>
+        <span style="display:block;padding:5px 0;border-bottom:1px solid var(--border)">→ Note that "functional" is insufficient for US consumers — research how competitors frame specific health claims</span>
+        <span style="display:block;padding:5px 0;border-bottom:1px solid var(--border)">→ Add Recess as a competitor (Rafael flagged it as emerging threat at trade shows)</span>
+        <span style="display:block;padding:5px 0">→ Include wellness studio / pilates / yoga channel as a distribution consideration</span>
+      </div>
+    </div>`;
+    addRawMessage('jordan', basePromptCard);
+    updateChips('jordan', 'prompt_editing');
+  }, 600);
+}
+
+function showFinalPromptUnlock() {
+  // Phase B: After student has shared their edits, Jordan validates and releases Section 1
+  const card = `<div class="unlock-card">
+    <div class="unlock-title" style="color:var(--teal)">Section 1 — Ready to Research</div>
+    <div class="unlock-desc">That's exactly the mindset. You're not outsourcing your thinking to AI — you're directing it with better information than it would have on its own.<br><br>
+    Take your edited prompt into Claude, ChatGPT, or Perplexity. Run it. Then document:<br><br>
+    <span style="display:block;padding:6px 0;border-bottom:1px solid var(--border2);font-size:13px"><strong style="color:var(--gold)">1.</strong> Which tool you used and why you chose it</span>
+    <span style="display:block;padding:6px 0;border-bottom:1px solid var(--border2);font-size:13px"><strong style="color:var(--gold)">2.</strong> 3 things the AI got right — cite sources where possible</span>
+    <span style="display:block;padding:6px 0;border-bottom:1px solid var(--border2);font-size:13px"><strong style="color:var(--gold)">3.</strong> 2 gaps you had to fill with your own judgment</span>
+    <span style="display:block;padding:6px 0;border-bottom:1px solid var(--border2);font-size:13px"><strong style="color:var(--gold)">4.</strong> Your final problem statement in one sentence</span>
+    <span style="display:block;padding:6px 0;font-size:13px"><strong style="color:var(--gold)">5.</strong> Your city recommendation + primary consumer segment</span>
+    <br><em style="color:var(--muted);font-size:12px">That documentation IS your Section 1 portfolio artifact. The edits you made to the prompt are part of it too — they show your analytical thinking.</em>
+    </div>
+    <div class="unlock-actions">
+      <button class="unlock-btn btn-primary" onclick="markSection1Done()">Mark Section 1 Complete →</button>
+      <button class="unlock-btn btn-secondary" onclick="saveProgress()">Save My Progress</button>
+    </div>
+  </div>`;
+  addRawMessage('jordan', card);
+}
+
+function markSection1Done() {
+  state.portfolioSections['section1'] = 'complete';
+  document.getElementById('phase-1').classList.add('phase-done');
+  document.getElementById('phase-1').classList.remove('phase-active');
+  updateProgress(95, 'Phase 5 of 5 — Portfolio In Progress');
+
+  const msg = `Section 1 complete. That's a real deliverable — not an assignment, not a draft. Something you can put in front of an employer.
+
+The remaining four sections — Consumer Personas, Competitive Intelligence, Campaign Positioning, and your AI Tools Reflection — continue after this session. Work through them at your own pace before semester end.
+
+<strong>Save your progress link now</strong> using the button above. Your entire conversation history with the team, your problem statement, and your prompt edits are all captured. That link is your submission.
+
+<em style="color:var(--gold)">The world doesn't need more marketers who know about AI. It needs marketers who use it to make better decisions, faster. You've started that today.</em>`;
+
+  addMessage('jordan', msg, false);
+
+  // Atoli Labs completion card
+  setTimeout(() => {
+    const atoliCard = `<div style="margin-top:8px;background:linear-gradient(135deg,rgba(0,212,170,0.06),rgba(245,200,66,0.06));border:1px solid rgba(0,212,170,0.2);border-radius:12px;padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:20px">
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--teal);margin-bottom:4px">Atoli Labs</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5">AI-powered learning experiences.<br>Want this kind of simulation for your team or organization?</div>
+      </div>
+      <a href="https://atolilabs.co" target="_blank" style="flex-shrink:0;padding:10px 18px;background:var(--teal);color:#0c0c0f;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;border-radius:8px;text-decoration:none;letter-spacing:0.03em;white-space:nowrap;transition:opacity 0.15s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">atolilabs.co →</a>
+    </div>`;
+    addRawMessage('jordan', atoliCard);
+  }, 800);
+
+  persistState();
+  showNotif('Section 1 complete — save your progress link!');
+}
+
+// ── RENDERING ──
+function addMessage(char, text, isUser) {
+  const msgs = document.getElementById('messages');
+  const charData = isUser ? null : CHARS[char];
+  
+  const div = document.createElement('div');
+  div.className = `msg ${isUser ? 'user' : ''}`;
+  
+  if (isUser) {
+    div.innerHTML = `
+      <div class="msg-avatar" style="background:rgba(255,255,255,0.05)">🎓</div>
+      <div class="msg-body">
+        <div class="msg-sender">You</div>
+        <div class="msg-bubble user-bubble">${text}</div>
+      </div>`;
+  } else {
+    div.innerHTML = `
+      <div class="msg-avatar" style="background:${charData.color}">${charData.avatar}</div>
+      <div class="msg-body">
+        <div class="msg-sender">${charData.name}</div>
+        <div class="msg-bubble ai-bubble">${formatMsg(text)}</div>
+      </div>`;
+  }
+  
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function addRawMessage(char, html) {
+  const msgs = document.getElementById('messages');
+  const charData = CHARS[char];
+  const div = document.createElement('div');
+  div.className = 'msg';
+  div.innerHTML = `
+    <div class="msg-avatar" style="background:${charData.color}">${charData.avatar}</div>
+    <div class="msg-body" style="max-width:85%">
+      <div class="msg-sender">${charData.name}</div>
+      ${html}
+    </div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function formatMsg(text) {
+  return text
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/\n/g, '<br>')
+    .replace(/^/, '<p>').replace(/$/, '</p>')
+    .replace(/<p><\/p>/g, '');
+}
+
+function showTyping() {
+  const msgs = document.getElementById('messages');
+  const char = CHARS[state.currentChar];
+  const div = document.createElement('div');
+  div.className = 'typing';
+  div.id = 'typingIndicator';
+  div.innerHTML = `
+    <div class="msg-avatar" style="background:${char.color}">${char.avatar}</div>
+    <div class="typing-dots">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+    </div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function hideTyping() {
+  const t = document.getElementById('typingIndicator');
+  if (t) t.remove();
+}
+
+// ── CHARACTER SWITCHING ──
+function switchChar(char) {
+  if (!state.unlockedChars.includes(char)) return;
+  
+  state.currentChar = char;
+  const charData = CHARS[char];
+  
+  // Update header
+  document.getElementById('activeAvatar').textContent = charData.avatar;
+  document.getElementById('activeAvatar').style.background = charData.color;
+  document.getElementById('activeName').textContent = charData.name;
+  document.getElementById('activeRole').textContent = charData.role;
+  
+  // Update sidebar active state
+  document.querySelectorAll('.character-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`btn-${char}`).classList.add('active');
+  
+  // Reload messages for this char
+  const msgs = document.getElementById('messages');
+  msgs.innerHTML = '';
+  
+  if (state.history[char].length === 0) {
+    // First time visiting — send intro
+    sendIntroFor(char);
+  } else {
+    state.history[char].forEach(h => {
+      if (h.user) addMessage('user', h.text, true);
+      else addMessage(char, h.text, false);
+    });
+  }
+  
+  updateChips(char);
+}
+
+async function sendIntroFor(char) {
+  if (char === 'jordan') return; // jordan handled separately
+  const intros = {
+    mei: "Hi, I'm Mei Zhang, CMO here at Kova. Jordan told me you'd be reaching out. I have about 20 minutes — I'm heading into a board prep call after this. What do you want to know?",
+    rafael: "Hey — Rafael. Jordan said you're the new analyst? Good. We need someone who can actually make sense of this US market situation. I've been to three trade shows in the past year and I have some strong opinions. What are you trying to figure out?",
+    priya: "Hi! So excited to meet you — I've been waiting for someone to actually listen to what customers are saying. I talk to our customers every week and there's so much the data doesn't capture. Where do you want to start?",
+    data: "SYSTEM READY. Welcome, Analyst. I am the Kova DataSystem — internal analytics platform. I respond to structured queries only. State your metric request."
+  };
+  
+  showTyping();
+  await delay(800);
+  hideTyping();
+  addMessage(char, intros[char], false);
+  saveHistory(char, intros[char], false);
+}
+
+// ── UNLOCK / LOCK ──
+function unlockChar(char) {
+  if (!state.unlockedChars.includes(char)) state.unlockedChars.push(char);
+  const btn = document.getElementById(`btn-${char}`);
+  btn.classList.remove('locked');
+  const badge = document.getElementById(`badge-${char}`);
+  badge.textContent = 'TALK';
+  badge.className = 'char-badge badge-new';
+}
+
+function markCharDone(char) {
+  const badge = document.getElementById(`badge-${char}`);
+  badge.textContent = '✓';
+  badge.className = 'char-badge badge-done';
+}
+
+// ── HISTORY & STATE ──
+function saveHistory(char, text, isUser) {
+  if (!state.history[char]) state.history[char] = [];
+  state.history[char].push({ text, user: isUser });
+}
+
+function persistState() {
+  try {
+    localStorage.setItem('kova_sim_state', JSON.stringify(state));
+  } catch(e) {}
+}
+
+function loadFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const encoded = params.get('s');
+  if (encoded) {
+    try {
+      const loaded = JSON.parse(atob(encoded));
+      state = { ...state, ...loaded };
+      // Restore unlocked chars
+      state.unlockedChars.forEach(c => {
+        if (c !== 'jordan') unlockChar(c);
+      });
+      // Restore done chars
+      state.talkedTo.forEach(c => markCharDone(c));
+      // Restore progress
+      if (state.phase === 'interviews') updateProgress(30, 'Phase 2 of 5 — Stakeholder Interviews');
+      if (state.phase === 'reporting') updateProgress(55, 'Phase 3 of 5 — Problem Framing');
+      if (state.phase === 'research') updateProgress(75, 'Phase 4 of 5 — Section 1 Research');
+      // Restore portfolio sections
+      if (state.portfolioSections?.section1 === 'complete') {
+        document.getElementById('phase-1').classList.add('phase-done');
+        updateProgress(95, 'Phase 5 of 5 — Portfolio Complete');
+      }
+      showNotif('Progress restored ✓');
+    } catch(e) {}
+  } else {
+    try {
+      const saved = localStorage.getItem('kova_sim_state');
+      if (saved) {
+        const loaded = JSON.parse(saved);
+        state = { ...state, ...loaded };
+        state.unlockedChars.forEach(c => { if (c !== 'jordan') unlockChar(c); });
+        state.talkedTo.forEach(c => markCharDone(c));
+        if (state.phase === 'interviews') updateProgress(30, 'Phase 2 of 5 — Stakeholder Interviews');
+        if (state.phase === 'reporting') updateProgress(55, 'Phase 3 of 5 — Problem Framing');
+        if (state.phase === 'research') updateProgress(75, 'Phase 4 of 5 — Section 1 Research');
+      }
+    } catch(e) {}
+  }
+}
+
+// ── SAVE MODAL ──
+function saveProgress() {
+  persistState();
+  const encoded = btoa(JSON.stringify(state));
+  const url = `${window.location.origin}${window.location.pathname}?s=${encoded}`;
+  document.getElementById('saveUrl').textContent = url;
+  document.getElementById('saveModal').classList.add('open');
+}
+
+function copyUrl() {
+  const url = document.getElementById('saveUrl').textContent;
+  navigator.clipboard.writeText(url).then(() => {
+    showNotif('Link copied to clipboard!');
+    closeModal();
+  });
+}
+
+function closeModal() { document.getElementById('saveModal').classList.remove('open'); }
+
+// ── PROGRESS ──
+function updateProgress(pct, label) {
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = label;
+}
+
+// ── SIDEBAR ──
+function renderSidebar() {}
+
+// ── CHIPS ──
+function updateChips(char) {
+  const chips = {
+    jordan: ['Tell me about the board deadline', 'What does success look like?', 'Any previous US research?', 'I want to report back what I found'],
+    jordan_prompt_editing: ['I\'d add Austin and NYC specifically based on the waitlist data', 'I\'d include the health claim requirement Priya mentioned', 'I\'d add the yoga studio channel as a distribution angle', 'I\'d mention the hero SKU challenge Rafael flagged'],
+    mei: ['What is Kova\'s core brand promise?', 'Why the US market now?', 'What\'s the budget for launch?', 'What are your biggest concerns?'],
+    rafael: ['What happened at trade shows?', 'Which cities showed most interest?', 'Who are the main competitors?', 'What do distributors say?'],
+    priya: ['What do US customers say about Kova?', 'What\'s the customer retention rate?', 'What channels work best for sampling?', 'How do customers describe the product?'],
+    data: ['US waitlist breakdown by city', 'Revenue by market', 'Instagram engagement metrics', 'Top performing SKU data']
+  };
+  const key = (char === 'jordan' && state.phase === 'prompt_editing') ? 'jordan_prompt_editing' : char;
+  const container = document.getElementById('promptChips');
+  container.innerHTML = (chips[key] || []).map(c => `<button class="p-chip" onclick="useChip(this)">${c}</button>`).join('');
+}
+
+function updatePromptChips(char, phase) { updateChips(char); }
+
+function useChip(btn) {
+  document.getElementById('userInput').value = btn.textContent;
+  sendMessage();
+}
+
+// ── UTIL ──
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+function showNotif(msg) {
+  const n = document.getElementById('notif');
+  n.textContent = msg;
+  n.classList.add('show');
+  setTimeout(() => n.classList.remove('show'), 2800);
+}
+
+function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+</script>
+</body>
+</html>
