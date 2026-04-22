@@ -16,7 +16,7 @@ Built for marketing students who want a practical map of the landscape, not anot
 ---
  
 ### AI Career Roadmap
-**[krysd09.github.io/roadmap](https://krysd09.github.io/tools/roadmap.html)**
+**[krysd09.github.io/tools/roadmap.html](https://krysd09.github.io/tools/roadmap.html)**
  
 A personalised 12-month roadmap for building AI skills that employers are actually asking for. Answer a few questions about your background and goals — the tool generates a sequenced learning path with specific skills, tools, and milestones tied to real job posting data.
  
