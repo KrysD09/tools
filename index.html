@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Marketing Tool Explorer 2026 — Atoli Labs</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f8fc;
+  --surface: #ffffff;
+  --surface2: #f0f1f7;
+  --border: #e2e4f0;
+  --ink: #0f0f1a;
+  --muted: #6b6f9a;
+  --dim: #a0a3c0;
+  --teal: #00b89a;
+  --teal-bg: #e6faf6;
+  --teal-dark: #085041;
+  --gold: #e8a000;
+  --gold-bg: #fff8e6;
+  --gold-dark: #633806;
+  --coral: #e8445a;
+  --coral-bg: #ffeef0;
+  --coral-dark: #712B13;
+  --blue: #3b6fe0;
+  --blue-bg: #edf2ff;
+  --purple: #7c5cbf;
+  --purple-bg: #f3f0ff;
+  --green: #3b6d11;
+  --green-bg: #eaf3de;
+  --berry: #993556;
+  --berry-bg: #fbeaf0;
+  --amber: #854f0b;
+  --amber-bg: #faeeda;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
+
+/* HEADER */
+.header {
+  background: var(--ink);
+  padding: 32px 40px 28px;
+  border-bottom: 2px solid var(--teal);
+}
+.header-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.brand { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
+.header-title { font-family: 'Syne', sans-serif; font-size: clamp(24px, 4vw, 36px); font-weight: 800; color: #fff; letter-spacing: -0.02em; line-height: 1.1; }
+.header-title span { color: var(--teal); }
+.header-sub { font-size: 14px; color: rgba(255,255,255,0.5); margin-top: 8px; }
+.atoli-link { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.3); text-decoration: none; letter-spacing: 0.05em; transition: color 0.15s; }
+.atoli-link:hover { color: var(--teal); }
+
+/* STAT BAR */
+.stat-bar { background: var(--surface); border-bottom: 1px solid var(--border); overflow-x: auto; }
+.stat-bar-inner { max-width: 1100px; margin: 0 auto; display: flex; padding: 0 40px; }
+.stat-item { padding: 16px 28px 14px; border-right: 1px solid var(--border); flex-shrink: 0; }
+.stat-item:first-child { padding-left: 0; }
+.stat-n { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; color: var(--teal); }
+.stat-l { font-size: 11px; color: var(--muted); margin-top: 3px; max-width: 140px; line-height: 1.4; }
+.stat-src { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--dim); margin-top: 3px; text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* MAIN */
+.main { max-width: 1100px; margin: 0 auto; padding: 32px 40px 80px; }
+
+/* FILTERS */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; align-items: center; }
+.filter-label { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; margin-right: 4px; }
+.f-btn { padding: 6px 16px; font-size: 13px; border-radius: 100px; cursor: pointer; border: 1px solid var(--border); background: var(--surface); color: var(--muted); transition: all 0.15s; font-family: 'Inter', sans-serif; }
+.f-btn:hover { border-color: var(--ink); color: var(--ink); }
+.f-btn.active { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+/* GRID */
+.tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+
+/* CARDS */
+.tool-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.tool-card:hover { border-color: var(--ink); box-shadow: 0 4px 16px rgba(15,15,26,0.08); }
+.tool-card.open { border-color: var(--ink); box-shadow: 0 4px 20px rgba(15,15,26,0.12); }
+.card-accent { height: 4px; }
+.card-body { padding: 16px 18px; }
+.card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; gap: 8px; }
+.tool-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: var(--ink); line-height: 1.2; }
+.cost-pill { font-size: 10px; padding: 3px 8px; border-radius: 100px; font-family: 'JetBrains Mono', monospace; white-space: nowrap; flex-shrink: 0; }
+.pill-free { background: var(--teal-bg); color: var(--teal-dark); }
+.pill-paid { background: var(--coral-bg); color: var(--coral-dark); }
+.pill-freemium { background: var(--gold-bg); color: var(--gold-dark); }
+.tool-use { font-size: 12.5px; color: var(--muted); line-height: 1.55; margin-bottom: 12px; }
+.cat-tag { display: flex; align-items: center; gap: 6px; }
+.cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.cat-label { font-size: 11px; color: var(--dim); font-family: 'JetBrains Mono', monospace; }
+
+/* EXPANDED DETAIL */
+.card-detail {
+  display: none;
+  border-top: 1px solid var(--border);
+  padding: 16px 18px;
+  background: var(--surface2);
+}
+.card-detail.open { display: block; }
+.detail-full { font-size: 13px; color: var(--ink); line-height: 1.65; margin-bottom: 14px; }
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.detail-box { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
+.detail-box-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dim); font-family: 'JetBrains Mono', monospace; margin-bottom: 5px; }
+.detail-box-val { font-size: 12px; color: var(--ink); line-height: 1.5; }
+.who-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); font-family: 'JetBrains Mono', monospace; margin-bottom: 7px; }
+.who-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.who-tag { font-size: 11px; padding: 3px 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 100px; color: var(--muted); }
+
+/* FOOTER */
+.footer {
+  background: var(--ink);
+  padding: 24px 40px;
+  margin-top: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer-sources { font-size: 11px; color: rgba(255,255,255,0.3); line-height: 1.7; max-width: 700px; }
+.footer-brand { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 800; color: var(--teal); }
+.footer-tagline { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 3px; }
+
+@media (max-width: 600px) {
+  .header { padding: 24px 20px; }
+  .main { padding: 24px 20px 60px; }
+  .stat-bar-inner { padding: 0 20px; }
+  .footer { padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <div class="brand">Atoli Labs · AI Marketing Tool Explorer</div>
+      <div class="header-title">What Marketers Are<br><span>Actually Using</span></div>
+      <div class="header-sub">18 tools · 7 use case categories · 2026 adoption data · job market signals</div>
+    </div>
+    <a href="https://atolilabs.co" class="atoli-link">atolilabs.co →</a>
+  </div>
+</div>
+
+<div class="stat-bar">
+  <div class="stat-bar-inner">
+    <div class="stat-item">
+      <div class="stat-n">87%</div>
+      <div class="stat-l">of marketers use AI in at least one workflow</div>
+      <div class="stat-src">Salesforce 2026</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-n">6.1 hrs</div>
+      <div class="stat-l">saved per marketer per week on average</div>
+      <div class="stat-src">HubSpot 2026</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-n">3.2×</div>
+      <div class="stat-l">average ROI from AI content drafting</div>
+      <div class="stat-src">McKinsey 2026</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-n">23%</div>
+      <div class="stat-l">of agencies cut junior copywriter roles in 2025</div>
+      <div class="stat-src">Gartner 2026</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-n">93%</div>
+      <div class="stat-l">AI adoption among SEO specialists — highest of any function</div>
+      <div class="stat-src">HubSpot 2026</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-n">34%</div>
+      <div class="stat-l">of enterprise teams run at least one autonomous AI agent</div>
+      <div class="stat-src">HubSpot Q1 2026</div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="filters">
+    <span class="filter-label">Filter by</span>
+    <button class="f-btn active" onclick="filter('all',this)">All tools</button>
+    <button class="f-btn" onclick="filter('research',this)">Research & Insights</button>
+    <button class="f-btn" onclick="filter('content',this)">Content Creation</button>
+    <button class="f-btn" onclick="filter('visual',this)">Visual & Video</button>
+    <button class="f-btn" onclick="filter('seo',this)">SEO & Search</button>
+    <button class="f-btn" onclick="filter('crm',this)">CRM & Automation</button>
+    <button class="f-btn" onclick="filter('analytics',this)">Analytics & Social</button>
+    <button class="f-btn" onclick="filter('agents',this)">Agents & Workflow</button>
+  </div>
+  <div class="tool-grid" id="grid"></div>
+</div>
+
+<div class="footer">
+  <div class="footer-sources">
+    Sources: Salesforce State of Marketing 2026 · HubSpot AI Trends 2026 · Gartner CMO Spend Survey 2026 · McKinsey Global AI Survey · G2 Top Products 2025 · Marketer Milk 2026 · Digital Applied AI Marketing Statistics 2026 · Planable AI Survey 2025
+  </div>
+  <div style="text-align:right">
+    <div class="footer-brand">Atoli Labs</div>
+    <div class="footer-tagline">AI-powered learning experiences · atolilabs.co</div>
+  </div>
+</div>
+
+<script>
+const CATS = {
+  research:  { label:'Research & Insights',   color:'#00b89a' },
+  content:   { label:'Content Creation',       color:'#3b6fe0' },
+  visual:    { label:'Visual & Video',         color:'#e8445a' },
+  seo:       { label:'SEO & Search',           color:'#3b6d11' },
+  crm:       { label:'CRM & Automation',       color:'#7c5cbf' },
+  analytics: { label:'Analytics & Social',     color:'#993556' },
+  agents:    { label:'Agents & Workflow',      color:'#854f0b' },
+};
+
+const TOOLS = [
+  { name:'Claude / ChatGPT', cat:'research', cost:'freemium',
+    use:'Research synthesis, persona building, brief writing, competitive analysis. The backbone of most AI marketing workflows.',
+    detail:'Used in 87% of marketing teams. Most common tasks: drafting research briefs, synthesizing competitor data, building customer personas, writing and iterating ad copy. Claude is strong on structured reasoning and long documents; ChatGPT has the largest user base and widest plugin ecosystem.',
+    jobDemand:'Mentioned in 64% of marketing analyst job postings (2026)',
+    freeOption:'Claude.ai free tier; ChatGPT free tier. Both offer paid plans at ~$20/month.',
+    who:['Research analysts','Content marketers','Brand strategists','Account managers'] },
+
+  { name:'Perplexity AI', cat:'research', cost:'free',
+    use:'Real-time market research with cited sources. Replaces 2–3 hours of manual search research.',
+    detail:'Marketers use Perplexity for quick competitive landscape snapshots, market sizing, and trend verification. Because it cites sources inline, the output is more trustworthy for client-facing work than uncited AI responses.',
+    jobDemand:'Emerging — appearing in listings under "AI research tools" and "market intelligence"',
+    freeOption:'Free with generous daily limit. Pro plan $20/month unlocks more searches and GPT-4o access.',
+    who:['Market research analysts','Strategists','Consultants','Agency teams'] },
+
+  { name:'NotebookLM', cat:'research', cost:'free',
+    use:'Upload reports, transcripts, competitor docs — then ask questions across all of them at once.',
+    detail:'Marketing teams upload quarterly reports, customer interview transcripts, WEF/industry reports, and competitor filings, then query across them as a unified knowledge base. A Google product, completely free. Excellent for synthesizing large document sets before writing a strategy brief.',
+    jobDemand:'Niche but growing — cited in research-heavy and strategy roles',
+    freeOption:'Completely free (Google product). No paid tier required.',
+    who:['Research analysts','Brand managers','Strategy leads','Consultants'] },
+
+  { name:'Jasper AI', cat:'content', cost:'paid',
+    use:'Brand-consistent content at scale — ad copy, emails, landing pages, social posts across teams.',
+    detail:'Purpose-built for marketing teams, unlike general AI assistants. Has brand voice controls, approval workflows, templates, and SOC2 compliance for enterprises. Best for teams producing high volumes of copy across campaigns. The 2026 update added Jasper Grid for workflow automation and a no-code AI App Builder.',
+    jobDemand:'Listed in 28% of content marketing roles requiring specific AI tools',
+    freeOption:'7-day free trial; from $39/month for individuals.',
+    who:['Content marketers','Copywriters','Demand gen teams','Agency teams'] },
+
+  { name:'Gamma', cat:'content', cost:'freemium',
+    use:'Converts notes, outlines, or briefs into polished presentations, documents, and webpages in minutes.',
+    detail:'Marketers use Gamma to produce client presentations, internal strategy decks, and one-pagers without touching PowerPoint. AI generates layout, visuals, and structure from a text prompt. Particularly popular for fast-turnaround client decks and investor briefs.',
+    jobDemand:'Growing — appearing in client-facing marketing and strategy roles',
+    freeOption:'Free tier (unlimited AI decks with Gamma branding). Plus $8/month removes branding.',
+    who:['Strategists','Account managers','Brand managers','Consultants'] },
+
+  { name:'Canva AI', cat:'visual', cost:'freemium',
+    use:'Social media creatives, presentations, brand materials — AI generates designs from text prompts in seconds.',
+    detail:'40% of marketers now use Canva as their primary design tool. AI features include Magic Design (generate from prompt), background removal, brand kit application, and text-to-image. 16.6 million monthly US searches. Required skill in 41% of social media manager role postings.',
+    jobDemand:'Required skill in 41% of social media manager job postings',
+    freeOption:'Generous free tier. Pro $15/month adds AI features, brand kit, and background remover.',
+    who:['Social media managers','Content marketers','Brand managers','Small teams','Students'] },
+
+  { name:'Midjourney', cat:'visual', cost:'paid',
+    use:'Custom photorealistic campaign imagery, brand visuals, concept art — no stock photos or photographers needed.',
+    detail:'Marketers use it to generate hero images for campaigns, mood boards for brand presentations, and unique social assets that stand out from stock photography. Produces the highest-quality creative imagery of any current AI tool but requires prompt skill to get good results.',
+    jobDemand:'Emerging — appearing in creative director and brand manager roles',
+    freeOption:'No free tier. From $10/month (Basic). Requires Discord account.',
+    who:['Creative directors','Brand managers','Content leads','Designers'] },
+
+  { name:'HeyGen', cat:'visual', cost:'freemium',
+    use:'AI spokesperson videos in 40+ languages — no camera, studio, or actors needed.',
+    detail:'G2\'s #1 fastest-growing product 2025. Marketing teams create product explainers, training videos, and localized campaign content. One agency (Tec-Do) reported cutting video production from 3 days to under 1 hour at 97% lower cost per video. AI avatar technology supports 40+ languages with lip-sync.',
+    jobDemand:'Rapidly emerging in global and multilingual marketing roles',
+    freeOption:'Free tier (1 min video/month). Creator $24/month. Enterprise pricing available.',
+    who:['Content marketers','Demand gen teams','Global marketing leads','Agencies'] },
+
+  { name:'AdCreative.ai', cat:'visual', cost:'paid',
+    use:'AI-generated ad creatives — banners, social ads, display ads — optimized for conversion by platform.',
+    detail:'Generates hundreds of ad creative variations tested against performance data. One case study (Qula360) reported CTR tripling from 2.24% to 6.74% vs static image ads. Used by performance marketing teams running paid social and display where creative fatigue requires constant fresh variation.',
+    jobDemand:'Appearing in paid media and growth marketing roles',
+    freeOption:'7-day free trial. Starter from $21/month.',
+    who:['Performance marketers','Paid social managers','Growth marketers','E-commerce teams'] },
+
+  { name:'Semrush', cat:'seo', cost:'freemium',
+    use:'Keyword research, competitor analysis, market share tracking, backlink audits — the most complete marketing intelligence platform.',
+    detail:'Semrush now includes an AI writing assistant, keyword gap analysis, and competitor content tracking. Used by agencies and in-house teams for both SEO and broader competitive intelligence. Required or preferred in 52% of digital marketing roles. SEO specialists have 93% AI adoption — highest of any marketing function.',
+    jobDemand:'Required or preferred in 52% of digital marketing job postings',
+    freeOption:'Free account gives 10 queries/day. Pro from $117/month (often available at discount).',
+    who:['SEO specialists','Research analysts','Demand gen','Agency teams','Brand managers'] },
+
+  { name:'Surfer SEO', cat:'seo', cost:'paid',
+    use:'Content optimization for search rankings — AI tells you exactly what to write, how long, and which keywords to use.',
+    detail:'Used by SEO specialists and content marketers to write content that ranks. AI analyzes top-ranking pages and gives a real-time content score as you write. Strong integration with Google Docs and WordPress. Best when combined with Semrush for research and Surfer for writing optimization.',
+    jobDemand:'Listed in 38% of SEO specialist role postings',
+    freeOption:'No free tier. From $79/month (frequently discounted to $49).',
+    who:['SEO specialists','Content marketers','Growth marketers','Agencies'] },
+
+  { name:'HubSpot AI', cat:'crm', cost:'freemium',
+    use:'AI-powered CRM, email marketing, lead scoring, and automation — all integrated in one platform.',
+    detail:'HubSpot added AI across its entire suite: email subject line optimization, lead scoring, content creation, chatbot building, and Breeze AI agents for autonomous workflow automation. Most widely used CRM among SMB marketing teams. 70% of marketers report it makes their job easier (Planable 2025).',
+    jobDemand:'Listed in 47% of marketing operations role postings',
+    freeOption:'Generous free CRM. Marketing Hub from $800/month (significant jump — most analysts use the free CRM only).',
+    who:['Marketing ops','Demand gen','Email marketers','Small-mid marketing teams'] },
+
+  { name:'Salesforce Marketing Cloud', cat:'crm', cost:'paid',
+    use:'Enterprise-grade AI personalization, customer journey automation, and cross-channel campaign optimization.',
+    detail:'Einstein AI predicts send times, personalizes content at scale, scores leads, and recommends next-best actions. Used by Fortune 500 companies. Boston Scientific and Momentive cited it as essential for centralizing customer data and creating tailored journeys. Required in 31% of enterprise marketing manager roles.',
+    jobDemand:'Required in 31% of enterprise marketing manager role postings',
+    freeOption:'No free tier. Pricing starts ~$400/month and scales significantly for enterprise.',
+    who:['Enterprise marketing ops','CRM managers','VP Marketing','Enterprise account managers'] },
+
+  { name:'Omnisend', cat:'crm', cost:'freemium',
+    use:'AI-powered email and SMS marketing automation built specifically for e-commerce brands.',
+    detail:'Connects directly to store data so messages trigger from customer actions like cart abandonment, purchases, and signups. FiGPiN achieved a 63% open rate and 22% conversion on their AI-assisted welcome series. Dukier grew Omnisend-attributed revenue 525% over 3 years.',
+    jobDemand:'Growing in e-commerce and DTC marketing roles',
+    freeOption:'Free up to 250 contacts. Paid from $16/month.',
+    who:['E-commerce marketers','DTC brands','Email marketers','Growth marketers'] },
+
+  { name:'Google Analytics 4', cat:'analytics', cost:'free',
+    use:'Web behaviour, conversion tracking, audience insights, attribution. The mandatory baseline for every marketing analyst role.',
+    detail:'GA4\'s AI features include anomaly detection, predictive audiences (likely purchasers), and automated insights. Understanding GA4 is table stakes for any marketing analyst or digital marketing role — it appears in 78% of job postings as required. Replaced Universal Analytics in 2023.',
+    jobDemand:'Required in 78% of digital marketing job postings — most cited tool of any',
+    freeOption:'Completely free. GA4 360 for enterprise (custom pricing).',
+    who:['All marketing roles','Research analysts','Growth marketers','Marketing ops','Students'] },
+
+  { name:'Hootsuite Insights', cat:'analytics', cost:'paid',
+    use:'AI social listening across 150M+ websites and 30 platforms in 187 languages — brand and competitor monitoring at scale.',
+    detail:'Tracks brand mentions, competitor conversations, and sentiment in real time. AI surfaces emerging trends before they peak. Used by social media managers and brand teams for reputation management and campaign strategy. University of Sydney social media team cited it as transforming their campaign strategy and stakeholder reporting.',
+    jobDemand:'Appearing in 22% of social media manager and brand manager postings',
+    freeOption:'No free social listening tier. Plans from $99/month.',
+    who:['Social media managers','Brand managers','PR teams','Global marketing leads'] },
+
+  { name:'Fathom', cat:'agents', cost:'free',
+    use:'Records meetings, auto-transcribes, summarises, and creates action items — saves 1–2 hours per week on note-taking.',
+    detail:'One of the fastest-adopted tools in marketing teams in 2025. Marketing teams use it to capture customer interview insights, brief agency calls, and strategy sessions. Notes are instantly searchable and shareable. Integrates with Zoom, Google Meet, and Teams. The free tier is genuinely generous.',
+    jobDemand:'Soft signal — use signals productivity mindset and is mentioned positively in interviews',
+    freeOption:'Genuinely generous free tier (unlimited meetings). Team plan from $19/month.',
+    who:['Account managers','Research analysts','Strategists','All client-facing roles'] },
+
+  { name:'Gumloop', cat:'agents', cost:'freemium',
+    use:'No-code AI workflow automation — connects any LLM to your marketing tools without writing code.',
+    detail:'Used by Webflow, Instacart, and Shopify marketing teams. Marketers build automated competitor intelligence reports, social media sentiment pipelines, and content repurposing workflows. Think Zapier but with an AI layer — connect ChatGPT or Claude to your CRM, social tools, and databases through a visual interface.',
+    jobDemand:'Emerging — cited in marketing automation and operations roles. High signal for forward-thinking teams.',
+    freeOption:'Free tier available. Paid from $97/month.',
+    who:['Marketing ops','Growth marketers','Analysts','Solo operators','Agency leads'] },
+];
+
+let currentCat = 'all';
+let openCard = null;
+
+function filter(cat, btn) {
+  currentCat = cat;
+  document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+  openCard = null;
+}
+
+function render() {
+  const filtered = currentCat === 'all' ? TOOLS : TOOLS.filter(t => t.cat === currentCat);
+  const grid = document.getElementById('grid');
+  grid.innerHTML = filtered.map((t, i) => {
+    const c = CATS[t.cat];
+    const pillCls = t.cost === 'free' ? 'pill-free' : t.cost === 'paid' ? 'pill-paid' : 'pill-freemium';
+    const pillTxt = t.cost === 'free' ? 'Free' : t.cost === 'paid' ? 'Paid' : 'Freemium';
+    return `<div class="tool-card" id="tc-${i}" onclick="toggle(${i})">
+      <div class="card-accent" style="background:${c.color}"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="tool-name">${t.name}</div>
+          <span class="cost-pill ${pillCls}">${pillTxt}</span>
+        </div>
+        <div class="tool-use">${t.use}</div>
+        <div class="cat-tag">
+          <span class="cat-dot" style="background:${c.color}"></span>
+          <span class="cat-label">${c.label}</span>
+        </div>
+      </div>
+      <div class="card-detail" id="td-${i}">
+        <div class="detail-full">${t.detail}</div>
+        <div class="detail-grid">
+          <div class="detail-box">
+            <div class="detail-box-label">Job market signal</div>
+            <div class="detail-box-val">${t.jobDemand}</div>
+          </div>
+          <div class="detail-box">
+            <div class="detail-box-label">Free option</div>
+            <div class="detail-box-val">${t.freeOption}</div>
+          </div>
+        </div>
+        <div class="who-label">Who uses it</div>
+        <div class="who-tags">${t.who.map(w => `<span class="who-tag">${w}</span>`).join('')}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggle(i) {
+  const card = document.getElementById(`tc-${i}`);
+  const detail = document.getElementById(`td-${i}`);
+  const isOpen = detail.classList.contains('open');
+
+  // Close all
+  document.querySelectorAll('.card-detail').forEach(d => d.classList.remove('open'));
+  document.querySelectorAll('.tool-card').forEach(c => c.classList.remove('open'));
+
+  if (!isOpen) {
+    detail.classList.add('open');
+    card.classList.add('open');
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+render();
+</script>
+</body>
+</html>
