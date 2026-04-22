@@ -7,7 +7,7 @@ Free, open-access tools for marketing students and practitioners who want to bui
 ## Tools
  
 ### AI Tool Explorer
-**[atolilabs.github.io/tools](https://atolilabs.github.io/tools)**
+**[krysd09.github.io/tools](https://krysd09.github.io/tools)**
  
 An interactive guide to the AI tools shaping modern marketing. Browse 18+ tools across 7 categories — content, research, analytics, personalisation, SEO, social, and automation. Click any tool to see what it does, who uses it, and how to get started.
  
@@ -16,7 +16,7 @@ Built for marketing students who want a practical map of the landscape, not anot
 ---
  
 ### AI Career Roadmap
-**[atolilabs.github.io/roadmap](https://atolilabs.github.io/roadmap)**
+**[krysd09.github.io/roadmap](https://krysd09.github.io/roadmap)**
  
 A personalised 12-month roadmap for building AI skills that employers are actually asking for. Answer a few questions about your background and goals — the tool generates a sequenced learning path with specific skills, tools, and milestones tied to real job posting data.
  
@@ -33,20 +33,10 @@ Built for students who want a real portfolio piece, not another certificate.
  
 ---
  
-## About Atoli Labs
- 
-Atoli Labs helps marketing students and professionals build practical AI skills through hands-on simulations and tools.
- 
-We run workshops, build open-access learning tools, and work with educators to bring AI into the marketing classroom in a way that's useful — not just theoretical.
- 
-**Website:** [atolilabs.co](https://atolilabs.co)
-**Workshop enquiries:** [hello@atolilabs.co](mailto:hello@atolilabs.co)
- 
----
  
 ## For Educators
  
-All three tools are free to use in the classroom. If you'd like to run the Kova simulation as a workshop session with your students, get in touch — we run facilitated 90-minute sessions post-semester.
+All three tools are free to use in the classroom. If you'd like to run the Kova simulation as a workshop session with your students, get in touch! 
  
 ---
  
